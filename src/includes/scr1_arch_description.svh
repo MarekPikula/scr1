@@ -8,7 +8,7 @@
 //-------------------------------------------------------------------------------
 // Core fundamental parameters (READ-ONLY, do not modify)
 //-------------------------------------------------------------------------------
-`define SCR1_MIMPID             32'h19083000
+`define SCR1_MIMPID             32'h19091700
 `define SCR1_XLEN               32
 `define SCR1_FLEN               `SCR1_XLEN
 `define SCR1_IMEM_AWIDTH        `SCR1_XLEN
@@ -25,9 +25,10 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
 //-------------------------------------------------------------------------------
 // Recommended core architecture configurations (modifiable)
 //-------------------------------------------------------------------------------
-//`define SCR1_CFG_RV32EC_MIN
-//`define SCR1_CFG_RV32IC_BASE
-`define SCR1_CFG_RV32IMC_MAX
+`undef SCR1_CFG_RV32EC_MIN
+`undef SCR1_CFG_RV32IC_BASE
+`undef SCR1_CFG_RV32IMC_MAX
+`define SCR1_TARGET_FPGA_INTEL
 
 //-------------------------------------------------------------------------------
 // Setting recommended configurations (READ-ONLY, do not modify)
@@ -72,19 +73,19 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
 //-------------------------------------------------------------------------------
 // PLEASE UNDEFINE ALL RECOMMENDED CONFIGURATIONS IF YOU WANT TO USE THIS SECTION
 
-  //`define SCR1_RVE_EXT                // enables RV32E base integer instruction set
+  `undef SCR1_RVE_EXT                 // enables RV32E base integer instruction set
   `define SCR1_RVM_EXT                // enables standard extension for integer mul/div
   `define SCR1_RVC_EXT                // enables standard extension for compressed instructions
 
   `define SCR1_IFU_QUEUE_BYPASS       // enables bypass between IFU and IDU stages
   `define SCR1_EXU_STAGE_BYPASS       // enables bypass between IDU and EXU stages
 
-  `define SCR1_FAST_MUL               // enables one-cycle multiplication
+  `define SCR1_FAST_MUL                // enables one-cycle multiplication
 
-  `define SCR1_CLKCTRL_EN             // enables global clock gating
+  `undef SCR1_CLKCTRL_EN              // enables global clock gating
 
   `define SCR1_VECT_IRQ_EN            // enables vectored interrupts
-  `define SCR1_CSR_MCOUNTEN_EN        // enables custom MCOUNTEN CSR
+  `define SCR1_CSR_MCOUNTEN_EN         // enables custom MCOUNTEN CSR
   parameter int unsigned SCR1_CSR_MTVEC_BASE_RW_BITS = 26;    // number of writable high-order bits in MTVEC BASE field
                                                               // legal values are 0 to 26
                                                               // read-only bits are hardwired to reset value
@@ -119,7 +120,7 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
 `define SCR1_DMEM_AXI_REQ_BP        // bypass data memory AXI bridge request register
 `define SCR1_DMEM_AXI_RESP_BP       // bypass data memory AXI bridge response register
 
-`define SCR1_TCM_EN                 // enables tightly-coupled memory
+`undef SCR1_TCM_EN                  // enables tightly-coupled memory
 
 //-------------------------------------------------------------------------------
 // Address constants
@@ -127,8 +128,8 @@ parameter int unsigned          SCR1_CSR_MTVEC_BASE_VAL_BITS    = `SCR1_XLEN-SCR
 `ifndef SCR1_ARCH_CUSTOM
 
 // Base address constants
-parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_RST_VECTOR        = 'h200;            // Reset vector
-parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_CSR_MTVEC_BASE    = 'h1C0;            // MTVEC BASE field reset value
+parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_RST_VECTOR        = 'h1A000080;       // Reset vector
+parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_CSR_MTVEC_BASE    = 'h1A008080;       // MTVEC BASE field reset value
 
 parameter bit [`SCR1_DMEM_AWIDTH-1:0]   SCR1_TCM_ADDR_MASK          = 'hFFFF0000;       // TCM mask and size
 parameter bit [`SCR1_DMEM_AWIDTH-1:0]   SCR1_TCM_ADDR_PATTERN       = 'h00480000;       // TCM address match pattern
